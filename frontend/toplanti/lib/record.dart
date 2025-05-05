@@ -1,11 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:toplanti/fileUpload.dart';
 
 import 'package:toplanti/styles/boxDecoration.dart';
 import 'package:toplanti/styles/sizes.dart';
 
 class Record extends StatefulWidget {
-  const Record({super.key});
+  
+
+
+const Record({super.key});
 
   @override
   State<Record> createState() => _RecordState();
@@ -39,21 +43,29 @@ class _RecordState extends State<Record> {
     });
   }
 
-  Future stopRecording() async {
-    if(_ffmpegProcess != null){
-      _ffmpegProcess!.kill(ProcessSignal.sigterm);
+    Future stopRecording() async {
+      if (_ffmpegProcess != null) {
+        _ffmpegProcess!.kill(ProcessSignal.sigterm);
+      }
+
+      await uploadFile(recordingPath!);
+
+   
+      if (mounted) {
+        setState(() {
+          isRecording = false;
+        });
+      }
     }
-    setState(() {
-      isRecording = false;
-    });
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
     
     return Container(
       width: context.screenWidth*0.3,
-      height: context.screenHeight*0.25,
+      height: context.screenHeight*0.30,
       padding: EdgeInsets.all(10),
       decoration: standardContainerDecoration,
       child: Padding(

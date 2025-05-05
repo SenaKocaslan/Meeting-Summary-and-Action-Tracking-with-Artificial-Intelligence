@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+
+import 'package:toplanti/styles/sizes.dart';
 import 'package:toplanti/styles/theme.dart';
+import 'package:toplanti/transcript_list.dart';
+import 'package:toplanti/websocket.dart';
 import 'record.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +29,8 @@ class MyApp extends StatelessWidget {
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
+  
+
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -40,6 +47,37 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final GlobalKey<TranscriptListState> _transcriptListKey = GlobalKey<TranscriptListState>();
+
+
+   late WebSocketService webSocketService;
+
+
+  @override
+void initState() {
+  super.initState();
+
+  webSocketService = WebSocketService(url: 'ws://127.0.0.1:8000/ws');
+  webSocketService.connect();
+
+  webSocketService.stream.listen((message) {
+    debugPrint("WebSocket mesajı: $message");
+    _transcriptListKey.currentState?.refresh();
+  });
+}
+
+
+  @override
+  void dispose() {
+    webSocketService.disconnect();
+    super.dispose();
+  }
+
+
+
+
+
+
   // int _counter = 0;
 
   // void _incrementCounter() {
@@ -68,8 +106,18 @@ class _MainScreenState extends State<MainScreen> {
             Column(
               children: [
                 Record()
+
               ],
             ),
+            Column(
+              children: [
+                SizedBox(
+                  height: context.screenHeight*0.5,
+                  width: context.screenWidth*0.33,
+                  child: TranscriptList(key: _transcriptListKey),
+                )
+              ],
+            )
           ],
         )
       ],
