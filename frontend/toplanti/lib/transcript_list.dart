@@ -48,10 +48,12 @@ class TranscriptListState extends State<TranscriptList> {
         }
 
         final transcripts = snapshot.data!;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: transcripts.map((t) {
+        return ListView.builder(
+          itemCount: transcripts.length,
+          itemBuilder: (context, index) {
+            final t = transcripts[index];
             final cleanedTitle = t.dosyaAdi.replaceAll('.wav', '');
+
             return GestureDetector(
               onTap: () {
                 showDialog(
@@ -76,8 +78,9 @@ class TranscriptListState extends State<TranscriptList> {
                 ),
               ),
             );
-          }).toList(),
+          },
         );
+
       },
     );
   }

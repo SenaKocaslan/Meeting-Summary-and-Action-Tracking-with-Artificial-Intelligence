@@ -112,7 +112,7 @@ void initState() {
             Column(
               children: [
                 SizedBox(
-                  height: context.screenHeight*0.5,
+                  height: context.screenHeight*0.9,
                   width: context.screenWidth*0.33,
                   child: TranscriptList(key: _transcriptListKey),
                 )
