@@ -15,3 +15,5 @@ venv/
 # Diğer
 .DS_Store
 *.log
+
+.wav
