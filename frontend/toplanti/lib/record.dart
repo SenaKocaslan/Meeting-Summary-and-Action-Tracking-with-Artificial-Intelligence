@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:toplanti/fileUpload.dart';
+=======
+import 'package:toplanti/services/transcript_service.dart';
 
 import 'package:toplanti/styles/boxDecoration.dart';
 import 'package:toplanti/styles/sizes.dart';
@@ -48,7 +51,13 @@ class _RecordState extends State<Record> {
         _ffmpegProcess!.kill(ProcessSignal.sigterm);
       }
 
+<<<<<<< HEAD
       await uploadFile(recordingPath!);
+=======
+      
+      await TranscriptService.transcribeAudio(File(recordingPath!));
+
+>>>>>>> c9436c2 (Backend ve Flutter tarafı güncellendi, .gitignore ile kayıtlar dışlandı)
 
    
       if (mounted) {
