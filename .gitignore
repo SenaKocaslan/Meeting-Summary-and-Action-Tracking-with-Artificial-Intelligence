@@ -17,3 +17,5 @@ venv/
 *.log
 
 .wav
+database/*.sqlite3
+database/*.sqlite3
